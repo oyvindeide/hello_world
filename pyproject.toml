@@ -1,0 +1,88 @@
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+[build-system]
+requires = ["setuptools>=45", "setuptools-scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hello_world"
+description = "Module containing a echo forward model"
+readme = "README.md"
+license = {text = "GPL-3.0"}
+requires-python = ">=3.11"
+authors = [
+    {name="Equinor ASA"},
+]
+version = "1.0.0"
+classifiers = [
+    "Programming language :: Python",
+    "Programming language :: Python :: 3.11",
+    "Programming language :: Python :: 3.12",
+]
+dependencies = [
+    "ert",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+
+style = [
+  "pre-commit",
+]
+
+[project.entry-points."everest"]
+hello-world = "hello_world.echo"
+
+[project.entry-points."ert"]
+hello_world_forward_models = "hello_world.echo"
+
+[project.scripts]
+hello_world = "hello_world.echo:main"
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+    "tests"
+]
+
+log_cli = 0
+log_cli_level = "INFO"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "SIM",  # flake-8-simplify
+    "PL",  # pylint
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+    "W191",  # not to be used in combination with a formatter
+    "PLW2901",  # redefined-loop-name
+    "PLR2004",  # magic-value-comparison
+    "PLR0915",  # too-many-statements
+    "PLR0912",  # too-many-branches
+    "PLR0911",  # too-many-return-statements
+    "PLC2701",  # import-private-name
+    "PLR6201",  # literal-membership
+    "PLR0914",  # too-many-locals
+    "PLR6301",  # no-self-use
+    "PLW1641",  # eq-without-hash
+    "PLR0904",  # too-many-public-methods
+    "PLR1702",  # too-many-nested-blocks
+    "PLW3201",  # bad-dunder-method-name
+]
+
+[tool.ruff.lint.pylint]
+max-args = 10
