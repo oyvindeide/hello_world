@@ -2,7 +2,7 @@ import sys
 from typing import Dict, Any
 
 import ert
-from ert import ForwardModelStepDocumentation, ForwardModelStepPlugin
+from ert import ForwardModelStepPlugin
 from everest.plugins import hookimpl
 
 
@@ -15,11 +15,7 @@ class HelloWorld(ForwardModelStepPlugin):
             ],
         )
 
-    @staticmethod
-    def documentation() -> ForwardModelStepDocumentation | None:
-        return ForwardModelStepDocumentation(
-            description="My very own custom print job",
-            examples="""
+EXAMPLE = """
 Argument examples
 ~~~~~~~~~~~~~~~~~
 
@@ -35,8 +31,7 @@ Output:
 .. code-block:: console
 
   Hello world: Oyvind
-""",
-        )
+"""
 
 @ert.plugin(name="hello_world")
 def installable_forward_model_steps():
@@ -50,7 +45,7 @@ def get_forward_model_documentations() -> Dict[str, Any]:
     job = HelloWorld()
     return {"Hello world": {
         "cmd_name": job.name,
-        "examples": job.documentation().examples,
+        "examples": EXAMPLE,
         "full_job_name": "Hello world",
     }}
 
